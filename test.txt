@@ -1,0 +1,94 @@
+#include<stdio.h>
+#include <time.h>
+#pragma warning(disable:4996)
+int isLeapYear(int Year);
+int daysWeek(int Year, int Month);
+int daysWeek(int Year, int Month);
+void monthCalendar(int, int);
+int main() {
+    int Year;
+    printf("请输入年份： ");
+    scanf("%d", &Year);
+    for (int i = 1; i <= 12; i++)
+    {
+        printf("--------------------------------------------------\n");
+        printf("%d 年 %d 月\n", Year, i);
+        monthCalendar(Year, i);
+    }
+    return 0;
+}
+    int isLeapYear(int Year)
+    {
+        if (Year % 4 == 0 && Year % 100 != 0 || Year % 400 == 0)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    int monthDays(int Year, int Month)
+    {
+        if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12)
+        {
+            return 31;
+        }
+        else if (Month == 4 || Month == 6 || Month == 9 || Month == 11)
+        {
+            return 30;
+        }
+        else
+        {
+            if (isLeapYear(Year))
+            {
+                return 29;
+            }
+            return 28;
+        }
+    }
+    void monthCalendar(int Year, int Month)
+    {
+        printf("--------------------------------------------------\n");
+        printf("一\t二\t三\t四\t五\t六\t日\n");
+        int t = daysWeek(Year, Month);
+        int day1 = monthDays(Year, Month);
+        for (int i = 0; i < t; i++)
+        {
+            printf("\t");
+        }
+        for (int i = 1; i <= day1; i++)
+        {
+            printf("%d\t", i);
+            if ((i + t) % 7 == 0)
+            {
+                printf("\n");
+            }
+        }
+        printf("\n");
+        printf("--------------------------------------------------\n");
+        printf("\n");
+
+    }
+    int daysWeek(int Year, int Month)
+    {
+        int day = 0, day1 = 0;
+        for (int i = 1900; i < Year; i++)
+        {
+            if (isLeapYear(i))
+            {
+                day = day + 366;
+            }
+            else
+            {
+                day = day + 365;
+            }
+        }
+        for (int m = 1; m <= Month; m++)
+        {
+            day1 = monthDays(Year, m);
+            if (m < Month)
+            {
+                day = day + day1;
+            }
+        }
+        int week = day % 7;
+        return week;
+    }
