@@ -1,0 +1,25 @@
+#include<stdio.h>
+#pragma warning(disable:4996)
+int main()
+{
+        int a[10] = { 0 }, b[100] = { 0 };
+	printf("请输入10个小于100的数。\n");
+	int len = sizeof(a) / sizeof(a[0]);
+	for (int i = 0; i < len; i++)
+	{
+		scanf("%d", &a[i]);
+		b[a[i]]++;
+	}
+	for (int j = 0; j < 100; j++)
+	{
+		int z = 0;
+		while (b[j]--)
+		{
+			printf("%d ", j);
+			z++;
+		}
+		if (z == 10)
+			break;
+	}
+return 0;
+}
