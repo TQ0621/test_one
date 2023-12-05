@@ -4,7 +4,7 @@
 void sort(int* a, int len)
 {
 	
-	for (int j = len - 1; j > 1; j--)
+	for (int j = len - 1; j >= 1; j--)
 	{
 		int *maxid = a;
 		for (int i = 1; i <= j; i++)
