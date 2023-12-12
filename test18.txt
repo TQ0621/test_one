@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<string.h>
+#pragma warning(disable:4996)
+struct stu
+{
+	long num;
+	char name[10];
+	struct stu* next;
+};
+
+int main() 
+{
+	struct stu a, b, c, * head, * p;
+	a.num = 2002001;
+	b.num = 2002002;
+	c.num = 2002003;
+	strcpy(a.name, "zhang");
+	strcpy(b.name, "sun");
+	strcpy(c.name, "li");
+	head = &a;
+	a.next = &b;
+	b.next = &c;
+	c.next = NULL;
+	p = head;
+	do {
+		printf("%ld,%s\n", p->num, p->name);
+		p = p->next;
+	} while (p != NULL);
+	return 0;
+}
