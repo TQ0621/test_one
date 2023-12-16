@@ -1,15 +1,33 @@
 #include<stdio.h>
 
+//数据存储方式
 int test()
 {
 	int a = 1;
 	return *(char*)&a;
 }
+
+//共用体方式
+int check_sys()
+{
+    union 
+    {
+       char a;
+       int b;
+    }u;
+  u.b=1;
+return u.a;
+}
 int main() 
 {
-	if (test == 1)
+	if (test() == 0)
 		printf("Big end");
 	else
 		printf("Small end");
 	return 0;
+      //if (check_sys() == 0)
+		//printf("Big end");
+      //else
+		//printf("Small end");
+	//return 0;
 }
