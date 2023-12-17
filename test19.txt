@@ -2,6 +2,7 @@
 #include<assert.h>
 #include<string.h>
 #include<stdlib.h>
+#include<errno.h>
 #pragma warning(disable:4996)
 #define MAX 100
 #define NAME 20
