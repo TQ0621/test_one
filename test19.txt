@@ -1,9 +1,11 @@
 #include<stdio.h>
 #include<assert.h>
 #include<string.h>
+#include<stdlib.h>
 #pragma warning(disable:4996)
 #define MAX 100
 #define NAME 20
+#define INC_SZ 2
 
 typedef struct peoinfo
 {
@@ -16,24 +18,29 @@ typedef struct peoinfo
 
 typedef struct Contact
 {
-	peoinfo data[100];
+	peoinfo* data;
 	int count;
+	int capacity;
 }Contact;
-//初始化Contact
-void InitContact(Contact* pc);
+//初始化Contact(3个)
+int InitContact(Contact* pc);
+//释放
+void DestroyContact(Contact* pc);
 //主页
 void menu();
-//枚举
+
 enum option
 {
-    EXIT,
-    ADD,
-    DEL,
-    SEARCH,
-    MODIFY,
-    SHOW,
-    SORT,
+	EXIT,
+	ADD,
+	DEL,
+	SEARCH,
+	MODIFY,
+	SHOW,
+	SORT,
 };
+//增容
+void CkeckCapacity(Contact* pc);
 //添加
 void AddContact(Contact* pc);
 //查找peoinfo
@@ -82,6 +89,7 @@ int main()
 			SortContact(&con);
 			break;
 		case EXIT:
+			DestroyContact(&con);
 			printf("退出通讯录\n");
 			break;
 		default:
@@ -92,12 +100,26 @@ int main()
 	return 0;
 }
 
-void InitContact(Contact* pc)
+int InitContact(Contact* pc)
 {
+	assert(pc);
 	pc->count = 0;
-	memset(pc->data, 0, sizeof(pc->data));
+	pc->data = (peoinfo*)calloc(3, sizeof(peoinfo));
+	if (pc->data == NULL)
+	{
+		printf("InitContact:%s\n", strerror(errno));
+		return 1;
+	}
+	pc->capacity = 3;
+	return 0;
 }
-
+void DestroyContact(Contact* pc)
+{
+	assert(pc);
+	free(pc->data);
+	pc->data = NULL;
+	printf("成功释放堆空间\n");
+}
 void menu()
 {
 	printf("************************************\n");
@@ -108,15 +130,30 @@ void menu()
 	printf("******  0. exit               ******\n");
 	printf("************************************\n");
 }
-
+void CkeckCapacity(Contact* pc)
+{
+	if (pc->count == pc->capacity)
+	{
+		peoinfo* ptr = (peoinfo*)realloc(pc->data, (pc->capacity + INC_SZ) * sizeof(peoinfo));
+		if (ptr == NULL)
+		{
+			printf("CkeckCapacity:%s\n", strerror(errno));
+			return;
+		}
+		else
+		{
+			pc->data = ptr;
+			pc->capacity += INC_SZ;
+			printf("增容成功\n");
+		}
+	}
+}
 void AddContact(Contact* pc)
 {
 	assert(pc);
-	if (pc->count == MAX)
-	{
-		printf("通讯录已满，无法添加\n");
-		return;
-	}
+	//增容
+	CkeckCapacity(pc);
+
 	printf("请输入名字:>");
 	scanf("%s", pc->data[pc->count].name);
 	printf("请输入年龄:>");
