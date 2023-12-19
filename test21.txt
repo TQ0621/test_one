@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<stdlib.h>
+#pragma warning(disable:4996)
+
+struct s
+{
+	int a;
+	int b[];
+};
+int main()
+{
+	struct s* ps = (struct s*)malloc(sizeof(struct s) + 40);
+	if (ps == NULL)
+	{
+		return 1;
+	}
+	ps->a = 100;
+	for (int i = 0; i < 10; i++)
+	{
+		ps->b[i] = i;
+	}
+	for (int j = 0; j < 10; j++)
+	{
+		printf("%d ", ps->b[j]);
+	}
+	//增容
+	struct s* ptr = (struct s*)realloc(ps, sizeof(struct s) + 80);
+	if (ptr != NULL)
+	{
+		ps = ptr;
+		ptr = NULL;
+	}
+	//释放空间
+	free(ps);
+	ps = NULL;
+
+	return 0;
+}
