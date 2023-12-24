@@ -1,0 +1,41 @@
+#include<stdio.h>
+#include<assert.h>
+#pragma warning(disable:4996)
+
+void Overturn(char* pp, int left, int right)
+{
+	assert(pp);
+	while(left < right)
+	{
+		char tmp = *(pp + left);
+		*(pp + left) = *(pp + right);
+		*(pp + right) = tmp;
+		right--;
+		left++;
+	}
+return;
+}
+char* Left_rotation(char* pa, int i,int len)
+{
+	assert(pa);
+	i %= len;
+	char* p = pa;
+	int left = 0, right = i-1;
+	Overturn(p, left, right);
+	left = i;
+	right = len - 1;
+	Overturn(p, left, right);
+	left = 0;
+	right = len - 1;
+	Overturn(p, left, right);
+	return pa;
+}
+int main()
+{
+	char arr[] = "abcdef";
+	int len = strlen(arr);
+	int i = 0;
+	scanf("%d", &i);
+	printf("%s", Left_rotation(arr, i,len));
+return 0;
+}
