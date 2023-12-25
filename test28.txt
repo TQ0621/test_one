@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<limits.h>
+#include<assert.h>
+#include<ctype.h>
+
+enum status
+{
+	VALID,
+	INVALTD,
+}sta=INVALTD;
+
+int my_atoi(const char* str)
+{
+	int flag = 1;
+	assert(str);
+	if (*str == '\0')
+		return 0;
+	while (isspace(*str))
+	{
+		str++;
+	}
+	if (*str == '+')
+	{
+		flag = 1;
+		str++;
+	}
+	else if (*str == '-')
+	{
+		flag = -1;
+		str++;
+	}
+	long long ret = 0;
+	while (*str)
+	{
+		if (isdigit(*str))
+		{
+			ret = ret * 10 + flag * (*str - '0');
+			if (ret > INT_MAX || ret < INT_MIN)
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return (int)ret;
+		}
+		str++;
+	}
+	if (*str == '\0')
+	{
+		sta = VALID;
+	}
+	return (int)ret;
+}
+int main()
+{
+	char arr[10] = "-2345";
+	int ret = my_atoi(arr);
+	if (sta == INVALTD)
+	{
+		printf("非法返回：%d\n", ret);
+	}
+	else if(sta == VALID)
+	{
+		printf("合法返回：%d\n", ret);
+	}
+return 0;
+}
