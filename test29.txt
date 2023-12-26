@@ -1,0 +1,12 @@
+#include<stdio.h>
+#pragma warning(disable:4996)
+
+#define SWAP_BIT(n) (((n&0x55555555)<<1)+((n&0xaaaaaaaa)>>1))
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	printf("%d\n", SWAP_BIT(n));
+	return 0;
+}
