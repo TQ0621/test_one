@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+#pragma warning(disable:4996)
+
+void replaceSpace(char* str, size_t len)
+{
+	assert(str);
+	char* p = str;
+	int Space = 0;
+	while (*p)
+	{
+		if (*p == ' ')
+			Space++;
+		p++;
+	}
+	size_t end1 = len - 1;
+	size_t end2 = len + Space * 2;
+	str[end2--] = '\0';
+	while (end1 != end2)
+	{
+		if (str[end1] != ' ')
+		{
+			str[end2--] = str[end1--];
+		}
+		else
+		{
+			end1--;
+			str[end2--] = '0';
+			str[end2--] = '2';
+			str[end2--] = '%';
+		}
+	}
+	return;
+}
+int main()
+{
+	char arr[30];
+	gets(arr);
+	size_t len = strlen(arr);
+	replaceSpace(arr, len);
+		printf("%s",arr);
+	return 0;
+}
