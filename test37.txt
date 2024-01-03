@@ -1,0 +1,28 @@
+#include<stdio.h>
+#pragma warning(disable:4996)
+
+void convert(int a)
+{
+	if (a < 10)
+	{
+		if (a % 2 != 0)
+			printf("1");
+		else
+			printf("0");
+		return;
+	}
+	convert(a / 10);
+	if ((a % 10) % 2 != 0)
+		printf("1");
+	else
+		printf("0");
+	return;
+}
+
+int main()
+{
+	int a = 0;
+	scanf("%d", &a);
+	convert(a);
+	return 0;
+}
