@@ -1,0 +1,59 @@
+#include<stdio.h>
+#pragma warning(disable:4996)
+
+int main()
+{
+	int a1 = 0;
+	scanf("%d", &a1);
+	int arr1[1000] = { 0 };
+	printf("请输入元素\n");
+	for (int i = 0; i < a1; i++)
+	{
+		scanf("%d", &arr1[i]);
+	}
+	int a2 = 0;
+	scanf("%d", &a2);
+	int arr2[1000] = { 0 };
+	printf("请输入元素\n");
+	for (int i = 0; i < a2; i++)
+	{
+		scanf("%d", &arr2[i]);
+	}
+	int a3 = a1 + a2;
+	int arr3[2000] = { 0 };
+	int j = 0, k = 0;
+	for (int i = 0; i < a3; i++)
+	{
+		if (j == a1)
+		{
+			arr3[i] = arr2[k];
+			k++;
+		}
+		if (k == a2)
+		{
+			arr3[i] = arr1[i];
+		}
+		if (arr1[j]<arr2[k]&&j<a1)
+		{
+			arr3[i] = arr1[j];
+			j++;
+		}
+		if(arr1[j]>=arr2[k]&&k<a2)
+		{
+			arr3[i] = arr2[k];
+			k++;
+		}
+	}
+	int num = a3;
+	if (num % 2 != 0)
+	{
+		int i = (num - 1) / 2;
+		printf("%d", arr3[i]);
+	}
+	else
+	{
+		int i = num / 2;
+		printf("%f", (double)(arr3[i] + arr3[i - 1]) / 2.0);
+	}
+	return 0;
+}
