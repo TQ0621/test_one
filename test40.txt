@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<string.h>
+#pragma warning(disable:4996)
+
+void Seek_str(char* p1, size_t len1, char* p2, size_t len2)
+{
+	for (int i = 0; i < len1; i++)
+	{
+		int num = 0;
+		for (int j = 0; j < len2; j++)
+		{
+			if (*(p1 + i) == *(p2 + j))
+			{
+				*(p2 + i) -= 32;
+				num++;
+				break;
+			}
+		}
+		if (num != 1)
+		{
+			printf("false\n");
+			return;
+		}
+	}
+	printf("true\n");
+	return;
+}
+int main()
+{
+	char a1[100000] = { 0 };
+	gets(a1);
+	size_t len1 = strlen(a1);
+	char a2[100000] = { 0 };
+	gets(a2);
+	size_t len2 = strlen(a2);
+	Seek_str(a1, len1, a2, len2);
+	return 0;
+}
