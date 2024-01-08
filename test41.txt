@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+#pragma warning(disable:4996)
+
+int BF(char* str, size_t s1, char* sub, size_t s2)
+{
+	assert(str != NULL && sub != NULL);
+	if (s1==0 || s2==0)
+		return -1;
+	int i = 0;
+	int j = 0;
+	while (i < s1 && j < s2)
+	{
+		if (str[i] == sub[j])
+		{
+			i++;
+			j++;
+		}
+		else
+		{
+			i = i - j + 1;
+			j = 0;
+		}
+	}
+	if (j == s2)
+		return i - j;
+	return -1;
+
+}
+
+int main()
+{
+	char str[1000] = { 0 };
+	gets(str);
+	size_t s1 = strlen(str);
+	char sub[1000] = { 0 };
+	gets(sub);
+	size_t s2 = strlen(sub);
+	printf("%d", BF(str, s1, sub, s2));
+	return 0;
+}
