@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<assert.h>
+#pragma warning(disable:4996)
+
+void Getnext(int* next, char* sub, size_t lensub);
+
+int KMP(char* str, char* sub, int pos);
+
+int main()
+{
+	char str[1000] = { 0 };
+	gets(str);
+	char sub[1000] = { 0 };
+	gets(sub);
+	//默认从0位置开始找
+	int pos=0;
+	printf("%d\n", KMP(str, sub, pos));
+	return 0;
+}
+
+void Getnext(int* next, char* sub, size_t lensub)
+{
+	next[0] = -1;
+	next[1] = 0;
+	int i = 2;
+	int k = 0;
+	while (i < lensub)
+	{
+		if (k == -1 || sub[i - 1] == sub[k])
+		{
+			next[i] = k + 1;
+			k++;
+			i++;
+		}
+		else
+		{
+			k = next[k];
+		}
+	}
+}
+
+int KMP(char* str, char* sub, int pos)
+{
+	assert(str != NULL && sub != NULL);
+	size_t lenstr = strlen(str);
+	size_t lensub = strlen(sub);
+	if (lenstr == 0 || lensub == 0)
+		return -1;
+	if (pos < 0 || pos >= lenstr)
+		return -1;
+	int* next = (int*)malloc(sizeof(int) * lensub);
+	assert(next != NULL);
+
+	Getnext(next, sub, lensub);
+
+	int i = pos;
+	int j = 0;
+	while (i < (int)lenstr && j < (int)lensub)
+	{
+		if (j == -1 || str[i] == sub[j])
+		{
+			i++;
+			j++;
+		}
+		else
+		{
+			j = next[j];
+		}
+	}
+	free(next);
+	next = NULL;
+	if (j == lensub)
+	{
+		return i - j;
+	}
+	return -1;
+}
