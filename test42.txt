@@ -4,9 +4,9 @@
 #include<assert.h>
 #pragma warning(disable:4996)
 
-void Getnext(int* next, char* sub, size_t lensub);
+void Getnextval(int* const next,const char* sub, size_t lensub);
 
-int KMP(char* str, char* sub, int pos);
+int KMP(const char* str,const char* sub, int pos);
 
 int main()
 {
@@ -20,9 +20,12 @@ int main()
 	return 0;
 }
 
-void Getnext(int* next, char* sub, size_t lensub)
+void Getnextval(int* const next,const char* sub, size_t lensub)
 {
+	assert(sub != NULL && next != NULL);
 	next[0] = -1;
+	if ((int)lensub == 1)
+		return;
 	next[1] = 0;
 	int i = 2;
 	int k = 0;
@@ -39,9 +42,17 @@ void Getnext(int* next, char* sub, size_t lensub)
 			k = next[k];
 		}
 	}
+	//next数组优化
+	for (int j = 2; j < lensub; j++)
+	{
+		if (sub[j] == sub[next[j]])
+		{
+			next[j] = next[next[j]];
+		}
+	}
 }
 
-int KMP(char* str, char* sub, int pos)
+int KMP(const char* str,const char* sub, int pos)
 {
 	assert(str != NULL && sub != NULL);
 	size_t lenstr = strlen(str);
@@ -53,7 +64,7 @@ int KMP(char* str, char* sub, int pos)
 	int* next = (int*)malloc(sizeof(int) * lensub);
 	assert(next != NULL);
 
-	Getnext(next, sub, lensub);
+	Getnextval(next, sub, lensub);
 
 	int i = pos;
 	int j = 0;
