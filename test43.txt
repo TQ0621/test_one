@@ -1,0 +1,49 @@
+#include<assert.h>
+
+List FindKth(int i, List PtrL)
+{
+	assert(PtrL != NULL);
+	if (PtrL == NULL||i<=0)
+		return NULL;
+	List p=PtrL;
+	int j = 1;
+	while (p != NULL && j < i)
+	{
+		p = p->Next;
+		j++;
+	}
+	if (j == i)
+		return p;
+	else
+		return NULL;
+}
+
+List Insert(ElementType x, int i, List PtrL)
+{
+
+	assert(PtrL != NULL);
+	if (PtrL == NULL||i<=0)
+		return NULL;
+	List p, s;
+	if (i == 1)
+	{
+		s = (List)malloc(sizeof(struct LNode));
+		s->Data = x;
+		s->Next = PtrL;
+		return s;
+	}
+	p = FindKth(i - 1, PtrL);
+	if (p == NULL)
+	{
+		printf("参数i出错\n");
+		return NULL;
+	}
+	else
+	{
+		s = (List)malloc(sizeof(strcut LNode));
+		s->Data = x;
+		s->Next = p->Next;
+		p->Next = s;
+		return NULL;
+	}
+}
