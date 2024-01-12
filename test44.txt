@@ -1,0 +1,50 @@
+#include<assert.h>
+
+List FindKth(int i, List PtrL)
+{
+	assert(PtrL != NULL);
+	if (PtrL == NULL||i<=0)
+		return NULL;
+	List p=PtrL;
+	int j = 1;
+	while (p != NULL && j < i)
+	{
+		p = p->Next;
+		j++;
+	}
+	if (j == i)
+		return p;
+	else
+		return NULL;
+}
+
+List Delete(int i, List PtrL)
+{
+	assert(PtrL != NULL);
+	if (PtrL == NULL||i<=0)
+		return NULL;
+	List p, s;
+	if (i == 1)
+	{
+		s = PtrL;
+		if (PtrL != NULL)
+			PtrL = PtrL->Next;
+		else
+			return NULL;
+		free(s);
+		return PtrL;
+	}
+	p = FindKth(i - 1, PtrL);
+	if (p == NULL||p->Next==NULL)
+	{
+		printf("无%d结点\n",i);
+		return NULL;
+	}
+	else
+	{
+		s = p->Next;
+		p->Next = s->Next;
+		free(s);
+		return PtrL;
+	}
+}
