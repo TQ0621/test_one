@@ -1,0 +1,39 @@
+#include<stdio.h>
+#include<assert.h>
+
+#define MAXSIZE 50
+
+struct Snode
+{
+	ElementType Data[MAXSIZE];
+	int Top;
+};
+typedef strurt Snode* Stack;
+//压栈
+viod Push(Stack Ptrs, ElementType item)
+{
+	assert(Ptrs != NULL);
+	if (Ptrs->Top == MAXSIZE)
+	{
+		printf("堆栈满\n");
+	}
+	else
+	{
+		Ptrs->Data[++(Ptrs->Top)] = item;
+		return;
+	}
+}
+//出栈
+ElementType Pop(stack Ptrs)
+{
+	assert(Ptrs != NULL);
+	if (Ptrs->Top == -1)
+	{
+		printf("堆栈空\n");
+		return ERROR;//ERROR表示删除出错
+	}
+	else
+	{
+		return (Ptrs->Data[(Ptrs->Top)--]);
+	}
+}
