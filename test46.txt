@@ -1,0 +1,48 @@
+#include<stdio.h>
+#pragma warning(disable:4996)
+
+int a[100][100];//原始矩阵
+int v[100][100];//记录是否用过
+int p, q, min = 99999;//p为目标的行，q为目标的列，min为步数
+void dfs(int x, int y, int step)
+{
+	if (x == p && y == q)
+	{
+		if (step < min)
+			min = step;
+		return;
+	}
+	//四个方向，右(k=0)，下(k=1)，左(k=2)，上(k=3)
+	int dx[4] = { 0,1,0,-1 };
+	int dy[4] = { 1,0,-1,0 };
+	for (int k = 0; k < 4; k++)
+	{
+		int tx, ty;
+		tx = x + dx[k];
+		ty = y + dy[k];
+		if (a[tx][ty] == 1 && v[tx][ty] == 0)
+		{
+			v[tx][ty] = 1;
+			dfs(tx, ty, step + 1);
+			v[tx][ty] = 0;
+		}
+	}
+}
+int main()
+{
+	int m, n;
+	int startx, starty;
+	scanf("%d %d", &m, &n);
+	for (int i = 1; i <= m; i++)
+	{
+		for (int j = 1; j <= n; j++)
+		{
+			scanf("%d", &a[i][j]);//1为空，2为障碍
+		}
+	}
+	scanf("%d %d %d %d", &startx, &starty, &p, &q);
+	v[startx][starty] = 1;//1为已读，0为未读
+	dfs(startx, starty, 0);
+	printf("%d", min);
+	return 0;
+}
