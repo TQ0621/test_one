@@ -1,0 +1,37 @@
+//层序遍历
+void LevelorderTraversal(BinTerr BT)
+{
+	Queue Q;
+	BinTerr T;//树的结点指针
+	if (!BT)
+		return;
+	Q = CreatQueue();//创建队列
+	AddQ(Q, BT);
+	while (!IsEmpty(Q))
+	{
+		T = DeleteQ(Q);//删除首元素并换回地址
+		printf("%d", T->Data);
+		if (T->Left)
+			AddQ(Q, T->Left);//将元素压栈
+		if (T->Right)
+			AddQ(Q, T->Right);//将元素压栈
+	}
+}
+//二叉树查找
+BinTree IterFind(ElementType x, BinTree BST)
+{
+	while (BST)
+	{
+		if (x > BST->Data)
+		{
+			BST = BST->Left;
+		}
+		else if (x < BST->Data)
+		{
+			BST = BST->Right;
+		}
+		else
+			return BST;
+	}
+	return NULL;
+}
