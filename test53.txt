@@ -1,0 +1,28 @@
+viod Insertsort(int a[], int n)
+{
+	int i, j, left, right, mid;
+	for (i = 2; i <= n; i++)
+	{
+		a[0] = a[i];
+		left = 1;
+		right = i - 1;
+		while (left <= right)
+		{
+			mid = (left + right) / 2;
+			if (a[mid] > a[0])
+			{
+				right = mid - 1;
+			}
+			else
+			{
+				left = mid + 1;
+			}
+		}
+		for (j = i - 1; j >= right - 1; j--)
+		{
+			a[j + 1] = a[j];
+		}
+		a[right + 1] = a[0];
+	}
+	return 0;
+}
