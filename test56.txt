@@ -1,0 +1,35 @@
+void Headadjust(int a[], int k, int len)
+{
+	a[0] = a[k];
+	for (int i = *k; i <= len; i *= 2)
+	{
+		if (i < len && a[i] < a[i + 1])
+			i++;
+		if (a[0] >= a[i])
+			break;
+		else
+		{
+			a[k] = a[i];
+			k = i;
+		}
+	}
+	a[k] = a[0];
+}
+
+void BuildMaxHeap(int a[], int len)
+{
+	for (int i = len / 2; i > 0; i--)
+	{
+		Headadjust(a, i, len);
+	}
+}
+
+void HeapSort(int a[], int len)
+{
+	BuildMaxHeap(a, len);
+	for (int i = len; i > 1; i--)
+	{
+		swap(a[i], a[1]);
+		Headadjust(a, 1, i - 1);
+	}
+}
